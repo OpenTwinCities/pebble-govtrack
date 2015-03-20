@@ -86,14 +86,9 @@ main.on('click', 'down', function() {
     function(data) {
       
       // Get the latest 5 bills that have recent status updates
-      var latest_bills = data.objects.slice(1,6);
+      var latest_bills = data.objects.slice(1,11);
       
-      console.log(latest_bills);
-      
-      console.log(latest_bills[0].display_number);
-      console.log(latest_bills[0].current_status_date);
-      console.log(latest_bills[0].id);
-      
+      /*
       var latest_bills_menu = [];
       
       for (var b in latest_bills) {
@@ -105,18 +100,15 @@ main.on('click', 'down', function() {
         });
       }
       
-      console.log(latest_bills_menu[0].title);
-      console.log(latest_bills_menu[0].subtitle);
-      console.log(latest_bills_menu[0].bill_id);
+      console.log(latest_bills_menu[0]);
+      */
       
-      
-      // Create a menu to display latest bills
-      var billsMenu = new UI.Menu({
-        sections: [{
-          title: "Recent Bills",
-          items: latest_bills_menu
-        }]
-      });
+      var billsMenu = new UI.Menu();
+      for (var i = 0; i < 10; i++) {
+        billsMenu.item(0, i, { title: latest_bills[i].display_number , 
+                              subtitle: latest_bills[i].current_status_date , 
+                              bill_id: latest_bills[i].id } );
+      }
       
       billsMenu.show();
       
@@ -125,6 +117,5 @@ main.on('click', 'down', function() {
     function(error) {
       console.log(error);
     }
-  );
-           
+  );           
 });
