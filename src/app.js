@@ -1,15 +1,14 @@
 var UI = require('ui');
-var Vector2 = require('vector2');
 var ajax = require('ajax');
 
 
 var main = new UI.Card({
   title: 'GovTrack',
   subtitle: 'Track reps & bills!',
-  body: 'Images: Alex Fuller & Lemon Liu @ The Noun Project',
+  body: 'Images: Alex Fuller & Simple Icons @ The Noun Project',
   action: {
     up: 'images/person_tiny.png',
-    down: 'images/bill_tiny.png'
+    down: 'images/bill_tiny_bw.png'
   }
 });
 
@@ -26,6 +25,12 @@ var repMenu = new UI.Menu({
   }]
 });
 
+
+main.on('click', 'up', function() {
+  repMenu.show();
+});
+
+
 repMenu.on('select', function(e) {
   
   var request = 'https://www.govtrack.us/api/v2/vote_voter/?person=' + e.item.govtrack_id + '&sort=-created';
@@ -38,37 +43,38 @@ repMenu.on('select', function(e) {
     function(data) {
       
       // Get the latest 3 votes for the selected representative
-      var latest_votes = data.objects.slice(1,4);
+      var latest_votes = data.objects.slice(1,11);
       
-      // Create the Card for detailed view
-      var votesCard0 = new UI.Card({
-        title: latest_votes[0].option.value,
-        subtitle: latest_votes[0].vote.result,
-        body: latest_votes[0].vote.question,
-        scrollable: true
+      var votesMenu = new UI.Menu();
+      for (var i = 0; i < 10; i++) {
+        votesMenu.item(0, i, { title: latest_votes[i].option.value ,
+                               subtitle: latest_votes[i].vote.question ,
+                               result: latest_votes[i].vote.result ,
+                               timestamp: latest_votes[i].vote.created ,
+                               total_plus: latest_votes[i].vote.total_plus ,
+                               total_minus: latest_votes[i].vote.total_minus ,
+                               total_other: latest_votes[i].vote.total_other         
+                               } );
+      }
+      
+      votesMenu.show();
+      
+      votesMenu.on("select", function(e) {
+        var voteCard = new UI.Card({
+          title: e.item.title,
+          subtitle: e.item.subtitle,
+          body: "RESULT: " + e.item.result + "\n(+" + e.item.total_plus + "\/-" + e.item.total_minus + "\/" + e.item.total_other + ")\nTIME: " + e.item.timestamp,
+          scrollable: true
+        });
+        
+        voteCard.show();
       });
-      
-      // Create the Card for detailed view
-      var votesCard1 = new UI.Card({
-        title: latest_votes[1].option.value,
-        subtitle: latest_votes[1].vote.result,
-        body: latest_votes[1].vote.question,
-        scrollable: true
-      });
-
-      
-      votesCard0.show();
-      votesCard1.show();
 
     },
     function(error) {
       console.log(error);
     }
   );
-});
-
-main.on('click', 'up', function() {
-  repMenu.show();
 });
 
 
@@ -88,30 +94,31 @@ main.on('click', 'down', function() {
       // Get the latest 5 bills that have recent status updates
       var latest_bills = data.objects.slice(1,11);
       
-      /*
-      var latest_bills_menu = [];
-      
-      for (var b in latest_bills) {
-        console.log(b);
-        latest_bills_menu.push({
-            title: b.display_number,
-            subtitle: b.current_status_date,
-            bill_id: b.id
-        });
-      }
-      
-      console.log(latest_bills_menu[0]);
-      */
-      
       var billsMenu = new UI.Menu();
       for (var i = 0; i < 10; i++) {
         billsMenu.item(0, i, { title: latest_bills[i].display_number , 
-                              subtitle: latest_bills[i].current_status_date , 
-                              bill_id: latest_bills[i].id } );
+                               subtitle: latest_bills[i].title_without_number , 
+                               bill_id: latest_bills[i].id ,
+                               introduced_date: latest_bills[i].introduced_date ,
+                               current_status_date: latest_bills[i].current_status_date ,
+                               current_status_label: latest_bills[i].current_status_label ,
+                               current_status_description: latest_bills[i].current_status_description ,
+                               sponsor: latest_bills[i].sponsor.name ,
+                               title_without_number: latest_bills[i].title_without_number } );
       }
       
       billsMenu.show();
       
+      billsMenu.on("select", function(e) {
+        var billCard = new UI.Card({
+          title: e.item.title,
+          subtitle: e.item.sponsor,
+          body: e.item.title_without_number + "\nSTATUS: " + e.item.current_status_label + "(" + e.item.current_status_date + ")" + "\nINTRODUCED: " + e.item.introduced_date,
+          scrollable: true
+        });
+        
+        billCard.show();
+      });   
     
     }, 
     function(error) {
