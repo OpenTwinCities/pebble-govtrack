@@ -10,6 +10,7 @@
         "media": [
             {
                 "file": "images/menu_icon.png",
+                "menuIcon": true,
                 "name": "IMAGE_MENU_ICON",
                 "type": "png"
             },
@@ -29,14 +30,13 @@
                 "type": "font"
             },
             {
-                "file": "images/bill_tiny.png",
-                "menuIcon": true,
-                "name": "IMAGES_BILL_TINY_PNG",
+                "file": "images/person_tiny.png",
+                "name": "IMAGES_PERSON_TINY_PNG",
                 "type": "png"
             },
             {
-                "file": "images/person_tiny.png",
-                "name": "IMAGES_PERSON_TINY_PNG",
+                "file": "images/bill_tiny.png",
+                "name": "IMAGES_BILL_TINY_PNG",
                 "type": "png"
             }
         ]
