@@ -11,17 +11,17 @@
             {
                 "file": "images/menu_icon.png",
                 "name": "IMAGE_MENU_ICON",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/logo_splash.png",
                 "name": "IMAGE_LOGO_SPLASH",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/tile_splash.png",
                 "name": "IMAGE_TILE_SPLASH",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "fonts/UbuntuMono-Regular.ttf",
@@ -29,23 +29,54 @@
                 "type": "font"
             },
             {
-                "file": "images/bill_tiny_bw.png",
-                "menuIcon": true,
-                "name": "IMAGES_BILL_TINY_BW_PNG",
+                "file": "images/music_icon_ellipsis.png",
+                "name": "IMAGES_MUSIC_ICON_ELLIPSIS_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/otc_bw.png",
+                "name": "IMAGES_OTC_BW_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/ellipsis_wb.png",
+                "name": "IMAGES_ELLIPSIS_WB_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/person_tiny_wb.png",
+                "name": "IMAGES_PERSON_TINY_WB_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/bill_tiny_wb.png",
+                "name": "IMAGES_BILL_TINY_WB_PNG",
                 "type": "png"
             },
             {
                 "file": "images/person_tiny.png",
                 "name": "IMAGES_PERSON_TINY_PNG",
-                "type": "png"
+                "type": "bitmap"
+            },
+            {
+                "file": "images/bill_tiny_bw.png",
+                "menuIcon": true,
+                "name": "IMAGES_BILL_TINY_BW_PNG",
+                "type": "bitmap"
             }
         ]
     },
+    "sdkVersion": "3",
     "shortName": "GovTrack",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
     "uuid": "154ff6ef-9213-41fc-bce6-96f7a4e63929",
     "versionCode": 1,
     "versionLabel": "1.0",
     "watchapp": {
+        "hiddenApp": false,
         "watchface": false
     }
 }

@@ -5,15 +5,29 @@ var ajax = require('ajax');
 var main = new UI.Card({
   title: 'GovTrack',
   subtitle: 'Track reps & bills!',
-  body: 'Images: Alex Fuller & Simple Icons @ The Noun Project',
+  body: 'Brought to you by: Open Twin Cities',
   action: {
     up: 'images/person_tiny.png',
+    select: "images/music_icon_ellipsis.png",
     down: 'images/bill_tiny_bw.png'
   }
 });
 
 main.show();
 
+// ABOUT INFO DISPLAY
+var aboutCard = new UI.Card({
+  title: 'About OTC:',
+  subtitle: 'http://www.opentwincities.org/',
+  body: 'Data: GovTrack, https://www.govtrack.us/ \nImages: Alex Fuller & Simple Icons @ The Noun Project',
+  icon: 'images/otc_bw.png',
+  scrollable: true
+});
+
+main.on('click', 'select', function() {
+  aboutCard.show();
+});
+  
 
 // REPRESENTATIVES MENU DISPLAY
 var representatives = [{title: 'Klobuchar', subtitle: 'D (MN)', govtrack_id: '412242'}, {title: 'Franken', subtitle: 'D (MN)', govtrack_id: '412378'}, {title: 'Ellison', subtitle: 'D (MN)', govtrack_id: '412215'}];
@@ -42,7 +56,7 @@ repMenu.on('select', function(e) {
     },
     function(data) {
       
-      // Get the latest 3 votes for the selected representative
+      // Get the latest 10 votes for the selected representative
       var latest_votes = data.objects.slice(1,11);
       
       var votesMenu = new UI.Menu();
@@ -91,11 +105,11 @@ main.on('click', 'down', function() {
     },
     function(data) {
       
-      // Get the latest 5 bills that have recent status updates
-      var latest_bills = data.objects.slice(1,11);
+      // Get the latest 15 bills that have recent status updates
+      var latest_bills = data.objects.slice(1,16);
       
       var billsMenu = new UI.Menu();
-      for (var i = 0; i < 10; i++) {
+      for (var i = 0; i < 15; i++) {
         billsMenu.item(0, i, { title: latest_bills[i].display_number , 
                                subtitle: latest_bills[i].title_without_number , 
                                bill_id: latest_bills[i].id ,
